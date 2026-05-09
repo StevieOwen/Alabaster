@@ -1,4 +1,5 @@
 <x-layout>
+<title>Alabaster & Ochre</title>
 <header class="text-[Montserrat] bg-[#EDE6E0] border-b border-b-[#3d3d3d] fixed w-full">
     <nav class="flex justify-between items-center mx-4 p-4 ">
         <h2 class="logo cursor-pointer">Alabaster & Ochre</h2>
@@ -8,13 +9,25 @@
         </ul>
     </nav>
 </header>
-<main  class="bg-[#EDE6E0]" >
+<main  class="bg-[#EDE6E0] " >
     <div class="flex flex-col items-center space-y-10 py-42">
         <h1  class="text-[#B7A54F] text-[min(5vw,250px)] font-bold">Document Your Moments</h1>
         <p class="text-[#6b6b6b] text-center text-[min(2vw,250px)] max-sm:text-center">A community for sharing quick snapshots of your travels, <br> events, and daily discoveries.</p>
         <button class="button-join"> <a href="/signup">Join the Community</a></button>
     </div>
+
+    {{-- <div class="">
+        <h4>Alabaster & Ochre</h4>
+        <div>
+            <img class="max-w-[20%]" src="{{ Storage::url('uploads/karlone.jpeg') }}" alt="">
+             <div class="p-2 flex flex-col space-y-2 " >
+
+             </div>
+        </div>
+        
+    </div> --}}
 </main>
+
 <section>
     <div class="py-25" >
         <h4 class="text-center text-[min(3vw,150px)] text-[#3d3d3d]  font-bold">How It Works</h4>

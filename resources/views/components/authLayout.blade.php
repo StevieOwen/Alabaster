@@ -8,7 +8,7 @@
 </head>
 <body class="bg-[#EDE6E0]">
 
-    <header class="text-[Montserrat] border-b border-b-[#3d3d3d] bg-[#EDE6E0] fixed w-full">
+    <header class="text-[Montserrat] z-10 border-b border-b-[#3d3d3d] bg-[#EDE6E0] fixed w-full">
         <h2 class="logo cursor-pointer text-center ">Alabaster & Ochre</h2>
     </header>
     <div>

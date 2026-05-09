@@ -17,5 +17,17 @@ class Authentication extends Controller
     function renderSignup(){
         return view("Auth/signup");
     }
+    function renderEmailvalidation(){
+        
+        return view("Auth/validateEmail");
+    }
+    function renderforgotPassword(){
+        
+        return view("Auth/forgotPassword");
+    }
+    function renderresetPassword(){
+        
+        return view("Auth/resetPassword");
+    }
 
 }

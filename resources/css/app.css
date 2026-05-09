@@ -39,7 +39,7 @@
 
   }
   .form-input{
-    @apply block border bg-[#EDE6E0] w-auto rounded-[8px] py-1 px-1;
+    @apply block border bg-[#EDE6E0] w-auto rounded-[8px] py-1 px-1 focus:outline-none focus:ring-2 focus:ring-[#C8A35C];
   }
   .input-submit{
     @apply bg-[#C8A35C] cursor-pointer text-[#fff] px-46 rounded-[10px] py-2 transition-colors duration-[1000ms] hover:bg-[#B7A54F];
@@ -47,4 +47,26 @@
   .link{
     @apply hover:underline;
   }
+
+  .community-card-cont{
+    @apply flex flex-row space-x-4 flex-wrap lg:justify-evenly lg:flex-row lg:flex-wrap lg:space-x-4 max-md:flex-col max-md:space-x-0 max-md:space-y-4 max-md:items-center  md:flex-col md:space-x-0 md:space-y-4 md:items-center;
+  }
+  .community-card{
+    @apply rounded-[12px] bg-[#fff] flex flex-col items-center max-w-[30%] p-1 max-md:max-w-[90%] md:max-w-[90%] lg:max-w-[30%] transition-transform duration-[1000ms] hover:-translate-2  ;
+  }
+  .card-img{
+    @apply w-full rounded-t-[12px];
+  }
+  .card-cat{
+    @apply bg-[#B8CCC1] w-auto py-1 px-2 rounded-[18px] text-[min(20px,12px)] md:w-auto lg:w-auto;
+  }
+  .card-caption{
+    @apply max-w-80 text-[#6b6b6b] p-2 border-b border-[#6b6b6b];
+  
+  }
+  .active{
+    @apply rounded-[12px] bg-[#E0D5C9] text-[#B7A54F] cursor-pointer max-w-50 font-medium;
+  }
+
 }
+
