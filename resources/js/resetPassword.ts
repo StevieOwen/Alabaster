@@ -1,3 +1,41 @@
+ let btn_update=document.getElementById('update_password')as HTMLInputElement | null;
+ let btn_link=document.getElementById('send_link')as HTMLInputElement | null;
+ let form=document.getElementById('form') as HTMLFormElement | null;
+
+ let form_reset_password=document.getElementById('form-reset-password') as HTMLFormElement | null;
+//change state button send link
+form?.addEventListener('submit',(e)=>{
+console.log("Submit event triggered");
+if (btn_link) {
+    // Disable first to prevent double-clicks
+    btn_link.disabled = true;
+    
+    // Change visuals
+    btn_link.classList.add('disabled'); 
+    btn_link.classList.add('opacity-50', 'cursor-not-allowed');
+    btn_link.value = "Checking Email ...";
+}
+
+})
+
+//change state button update password
+form_reset_password?.addEventListener('submit',(e)=>{
+console.log("Submit event triggered");
+if (btn_update) {
+    // Disable first to prevent double-clicks
+    btn_update.disabled = true;
+    
+    // Change visuals
+    btn_update.classList.add('disabled'); 
+    btn_update.classList.add('opacity-50', 'cursor-not-allowed');
+    btn_update.value = "Updating pasword ...";
+}
+
+})
+
+
+
+
 // show and hide password
 let toggle_pwd=document.getElementById('toggle-pwd');
 let pwd=document.getElementById('pwd');
@@ -22,10 +60,10 @@ toggle_pwd?.addEventListener('click',(e)=>{
 
 })
 
-
+    
 // show/hide password confirmation
 let toggle_pwd1=document.getElementById('toggle-pwd1');
-let pwdconf=document.getElementById('pwdconf');
+let pwdconf=document.getElementById('pwd_confirmation');
 const slashPath1 = document.querySelector<SVGPathElement>('#eye-slash-path1');
 let isPasswordVisible1 = false;
 
@@ -44,43 +82,5 @@ toggle_pwd1?.addEventListener('click',(e)=>{
             // Hide the slash line
             slashPath1?.classList.add('hidden');
         }
-
-})
-
-
-// change submit button state, when submitting the form ---start
-const btn_create_account = document.getElementById('btn-create-account') as HTMLInputElement | null;
-const form = document.getElementById('registration') as HTMLFormElement | null;
-
-form?.addEventListener('submit',(e)=>{
-    console.log("Submit event triggered");
-  if (btn_create_account) {
-        // Disable first to prevent double-clicks
-        btn_create_account.disabled = true;
-        
-        // Change visuals
-        btn_create_account.classList.add('disabled'); 
-        btn_create_account.classList.add('opacity-50', 'cursor-not-allowed');
-        btn_create_account.value = "Creating Account ...";
-    }
-
-
-})
-
-//change state login button
-const btn_login = document.getElementById('login') as HTMLInputElement | null;
-const form_signin = document.getElementById('form_signin') as HTMLFormElement | null;
-form_signin?.addEventListener('submit',(e)=>{
-    console.log("Submit event triggered");
-  if (btn_login) {
-        // Disable first to prevent double-clicks
-        btn_login.disabled = true;
-        
-        // Change visuals
-        btn_login.classList.add('disabled'); 
-        btn_login.classList.add('opacity-50', 'cursor-not-allowed');
-        btn_login.value = "Verifying Credentials...";
-    }
-
 
 })

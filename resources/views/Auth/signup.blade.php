@@ -18,12 +18,12 @@
            @csrf
             <div class='flex flex-col space-y-1'>
                 <label for="full-name"> Full Name</label>
-                <input class='form-input' type="full-name" id="full-name" name="full_name" value="" placeholder="John Doe" required>
+                <input class='form-input' type="full-name" id="full-name" name="full_name" value="{{ old('full_name') }}" placeholder="John Doe" required>
             </div>
 
             <div class='flex flex-col space-y-1'>
                 <label for="email"> Email</label>
-                <input class='form-input' type="email" id="email" name="email" value="" placeholder="johndoe@gmail.com" required>
+                <input class='form-input' type="email" id="email" name="email" value="{{ old('email') }}" placeholder="johndoe@gmail.com" required>
             </div>
 
             <div class='flex flex-col space-y-1 w-full'>

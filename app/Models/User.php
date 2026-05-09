@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+
 
 #[Fillable(['user_id','full_name', 'email', 'password','profile_picture','token','token_used'])]
 #[Hidden(['password', 'remember_token'])]
@@ -31,5 +34,15 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function publications(): HasMany
+    {
+        return $this->hasMany(Publication::class,'publisher');
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class,'commentator');
     }
 }

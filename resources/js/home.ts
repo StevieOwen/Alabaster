@@ -7,13 +7,13 @@ let comment_icon=document.getElementById('comment-icon');
 
 // open and close comments section ----start
 
-close_comment.addEventListener('click',(e)=>{
+close_comment?.addEventListener('click',(e)=>{
     e.preventDefault();
 
     comment_section?.classList.add("hidden")
 })
 
-comment_icon.addEventListener('click',(e)=>{
+comment_icon?.addEventListener('click',(e)=>{
     e.preventDefault();
     comment_section?.classList.remove("hidden")
 })
@@ -99,6 +99,67 @@ menuLinks.forEach(link => {
 });
 
 //show-hide sidemenu on small scree --end
+
+
+const publication_form=document.getElementById('publication-form') as HTMLButtonElement | null;
+const publish_btn=document.getElementById('publish-btn') as HTMLFormElement | null;
+
+publication_form?.addEventListener('submit',(e)=>{
+    console.log("Submit event triggered");
+  if (publish_btn) {
+        // Disable first to prevent double-clicks
+        publish_btn.disabled = true;
+        
+        // Change visuals
+        publish_btn.classList.add('disabled'); 
+        publish_btn.classList.add('opacity-50', 'cursor-not-allowed');
+        publish_btn.value = "Verifying Credentials...";
+    }
+
+})
+
+// whipe successfull publication created
+let pub_status=document.getElementById('pub_status') ;
+
+if (pub_status) {
+    setTimeout(() => {
+        pub_status.style.opacity = '0';
+        setTimeout(() => pub_status.remove(), 500); // Fade out and remove
+    }, 2000);
+}
+
+
+// show file name when selected
+const fileInput = document.getElementById('file-upload') as HTMLInputElement | null;
+const fileNameDisplay = document.getElementById('file-name');
+const fileSubtext = document.getElementById('file-subtext');
+
+if (fileInput && fileNameDisplay && fileSubtext) {
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files && fileInput.files.length > 0) {
+            // Get the name of the first file
+            const name = fileInput.files[0].name;
+            
+            // Update the UI
+            fileNameDisplay.innerText = "File Selected:";
+            fileSubtext.innerText = name;
+            fileSubtext.classList.add('text-[#C8A35C]', 'font-semibold'); // Add a highlight color
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

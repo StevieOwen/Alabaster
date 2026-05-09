@@ -12,11 +12,11 @@
                 </ul>
             </div>
         @endif
-        <form class="mt-2 flex flex-col space-y-4 " action="{{ route('login') }}" method="POST">
+        <form id="form_signin" class="mt-2 flex flex-col space-y-4 " action="{{ route('login') }}" method="POST">
             @csrf
             <div class='flex flex-col space-y-1'>
                 <label for="email"> Email</label>
-                <input class='form-input' type="email" id="email" name="email" value="" placeholder="johndoe@gmail.com" required>
+                <input class='form-input' type="email" id="email" name="email" value="{{ old('email') }}" placeholder="johndoe@gmail.com" required>
             </div>
             <div class='flex flex-col space-y-1 w-full'>
                 <label for="pwd"> Password</label>
@@ -36,7 +36,7 @@
             </div>
 
             <div class="flex justify-center">
-                <input class="input-submit" type="submit" value="Log In">
+                <input class="input-submit" id="login" type="submit" value="Log In">
             </div>
             <div>
                 <p class="text-center text-[#6b6b6b]">Don't have an account yet? <span class="text-[#C8A35C]"><a class="link" href="/signup">Sign Up</a> </span></p>
