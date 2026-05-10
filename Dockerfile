@@ -29,7 +29,7 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 # 4. Copy code and compiled assets
-COPY --from=asset-builder /app .
+COPY --from=asset-builder /app/public /var/www/html/public
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # 5. Install PHP dependencies
