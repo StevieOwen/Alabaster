@@ -7,7 +7,7 @@ RUN npm install && npm run build
 
 # Stage 2: PHP Server
 # We use the 'apache' version because it includes the web server and PHP in one package
-FROM php:8.2-apache
+FROM php:8.4-apache
 WORKDIR /var/www/html
 
 # 1. Install system dependencies for PostgreSQL
@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     libpng-dev \
     libzip-dev \
+    libicu-dev \
     zip \
     unzip \
     && docker-php-ext-install pdo pdo_pgsql gd zip
