@@ -16,5 +16,8 @@
         "ts-loader": "^9.5.7",
         "typescript": "^6.0.3",
         "vite": "^8.0.0"
+    },
+    "dependencies": {
+        "@tailwindcss/postcss": "^4.3.0"
     }
 }
