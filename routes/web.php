@@ -34,3 +34,10 @@ Route::get('/email/status', function () {
     ]);
 })->middleware('auth');
 
+Route::delete('/publications/{pub_id}', [PublicationController::class, 'destroy'])
+     ->middleware('auth')
+     ->name('publications.destroy');
+
+Route::put('/publications/{pub_id}', [PublicationController::class, 'update'])->middleware('auth');
+
+Route::put('/profile/update', [Customer::class, 'update'])->name('profile.update')->middleware('auth');

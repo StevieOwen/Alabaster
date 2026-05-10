@@ -52,7 +52,42 @@ class PublicationController extends Controller
         return redirect()->back()->with('status', 'Publication posted successfully!');
     }
 
-    
+    public function destroy($pub_id)
+    {
+        $user_id = Auth::id();
+        $publication = Publication::where('pub_id', $pub_id)
+                        ->where('publisher', $user_id) // Security: Only owner can delete
+                        ->firstOrFail();
+
+        // To manually delete the file from storage:
+        if ($publication->image) {
+            Storage::disk('public')->delete($publication->image->img);
+            $publication->image->delete();
+        }
+
+        $publication->delete();
+
+        return response()->json(['success' => true]);
+    }
+   
+    public function update(Request $request, $pub_id)
+    {
+        $request->validate([
+        'pub_category' => 'required|string|in:Travel,Work,Event,Personal',
+        'pub_caption'  => 'required|string|max:500',
+        ]);
+
+        $publication = Publication::where('pub_id', $pub_id)
+                                    ->where('publisher', auth()->id())
+                                    ->firstOrFail();
+
+        $publication->update([
+            'pub_category' => $request->pub_category,
+            'pub_caption' => $request->pub_caption
+        ]);
+
+        return response()->json(['success' => true]);
+    }
 
 
 }

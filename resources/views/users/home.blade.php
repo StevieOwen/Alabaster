@@ -33,7 +33,7 @@
         </div>
         <div class="mt-auto flex flex-col space-y-4 text-[#6b6b6b]"> 
             <div class="">
-                <a class="menuLinks flex space-x-2 items-center" href="">
+                <a data-target="setting-section" class="menuLinks flex space-x-2 items-center" href="">
                     <img class="w-[15%] rounded-full " src="{{$profilePhoto}}" alt="">
                     <span>{{ auth()->user()->full_name }}</span>
                 </a>
@@ -53,7 +53,7 @@
         </div>
     </aside>
 
-    <main id="main" class=" border-l border-[#6b6b6b]  p-2 flex flex-col space-y-6 justify-center md:ml-64">
+    <main id="main" class=" border-l border-[#6b6b6b]  p-2 flex flex-col space-y-6  md:ml-64">
         <div class=" relative z-10 md:hidden">
             <svg id="burger-menu-icon" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
             <path d='M4.5 6.5h15M4.5 12h15m-15 5.5h15'/></svg>
@@ -73,7 +73,7 @@
             
                 {{-- cards --}}
                 @foreach($publications as $pub)
-                    <div class="community-card">
+                    <div id="feed-card-{{ $pub->pub_id }}" class="community-card">
                         {{-- Post Image --}}
                         <img class="card-img" src="{{ $pub->image ? asset('storage/' . $pub->image->img) : asset('images/default-post.jpg') }}">
                         
@@ -228,47 +228,158 @@
                
         </section>
 
-        <section id="my-activities" class="p-2 hidden">
+        <section id="my-activities" class="flex flex-col items-start justify-start hidden">
             <header class="mb-6">
                 <h4 class="text-[#B7A54F] text-2xl font-bold max-md:text-center"> My Activities</h4>
             </header>
             
             <div class="flex flex-col space-y-4 ">
 
-                <div class="flex space-x-4 bg-[#f8f8ff] rounded-[12px] text-[#6b6b6b] shadow shadow-black transition-transform duration-[1000ms] hover:-translate-2">
-                    <img class="w-[20%]  rounded-l-[12px]" src="{{ Storage::url('uploads/karlone2.jpeg') }}" alt="">
-                    <div class="p-4">
-                        <div class="flex justify-between items-center">
-                            <span class="card-cat">categorie</span>
-                            <div class="flex space-x-2">
-                                <span><svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d='M14.678 3.272a3.483 3.483 0 0 1 4.928-.001l1.127 1.127a3.483 3.483 0 0 1 0 4.925L9.33 20.729a3.48 3.48 0 0 1-2.463 1.021H3a.75.75 0 0 1-.75-.75v-3.844a3.48 3.48 0 0 1 1.019-2.461zm3.867 1.06a1.983 1.983 0 0 0-2.806 0l-.896.897 3.931 3.931.898-.898a1.983 1.983 0 0 0 0-2.804z'/></svg>
-                                </span> 
-                                <span class="text-[#f3010f]"><svg  width="24" height="24" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d='m15.241 3.721.293 2.029H19.5a.75.75 0 0 1 0 1.5h-.769l-.873 10.185c-.053.62-.096 1.13-.165 1.542-.07.429-.177.813-.386 1.169a3.25 3.25 0 0 1-1.401 1.287c-.372.177-.764.25-1.198.284-.417.033-.928.033-1.55.033h-2.316c-.622 0-1.133 0-1.55-.033-.434-.034-.826-.107-1.198-.284a3.25 3.25 0 0 1-1.401-1.287c-.21-.356-.315-.74-.386-1.169-.069-.413-.112-.922-.165-1.542L5.269 7.25H4.5a.75.75 0 0 1 0-1.5h3.966l.293-2.029.011-.061c.182-.79.86-1.41 1.71-1.41h3.04c.85 0 1.528.62 1.71 1.41zM9.981 5.75h4.037l-.256-1.776c-.048-.167-.17-.224-.243-.224h-3.038c-.073 0-.195.057-.243.224zm1.269 4.75a.75.75 0 0 0-1.5 0v5a.75.75 0 0 0 1.5 0zm3 0a.75.75 0 0 0-1.5 0v5a.75.75 0 0 0 1.5 0z'/></svg> </span>
+                @forelse($myActivities as $activity)
+                    <div id="activity-card-{{ $activity->pub_id }}" class="flex space-x-4 bg-[#f8f8ff] rounded-[12px] text-[#6b6b6b] shadow shadow-black/10 transition-transform duration-500 hover:-translate-y-1">
+                        {{-- Post Image --}}
+                        <img class="w-[20%] object-cover rounded-l-[12px]" 
+                            src="{{ $activity->image ? asset('storage/' . $activity->image->img) : asset('images/default-post.jpg') }}" 
+                            alt="Activity Image">
+                        
+                        <div class="p-4 flex-1">
+                            <div class="flex justify-between items-center">
+                                    {{-- Category --}}
+                                <span class="card-cat px-3 py-1 bg-gray-200 rounded-full text-xs font-bold uppercase">
+                                    {{ $activity->pub_category }}
+                                </span>
+                                
+                                {{-- Action Buttons --}}
+                                <div class="flex space-x-3">
+                                    {{-- Edit Button --}}
+                                    <button onclick="openEditModal('{{ $activity->pub_id }}')" class="hover:text-blue-600 transition-colors">
+                                        <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d='M14.678 3.272a3.483 3.483 0 0 1 4.928-.001l1.127 1.127a3.483 3.483 0 0 1 0 4.925L9.33 20.729a3.48 3.48 0 0 1-2.463 1.021H3a.75.75 0 0 1-.75-.75v-3.844a3.48 3.48 0 0 1 1.019-2.461zm3.867 1.06a1.983 1.983 0 0 0-2.806 0l-.896.897 3.931 3.931.898-.898a1.983 1.983 0 0 0 0-2.804z'/>
+                                        </svg>
+                                    </button> 
+                                    
+                                    {{-- Delete Button --}}
+                                    <button onclick="deleteActivity('{{ $activity->pub_id }}')" id="btn-delete-{{ $activity->pub_id }}" class="text-[#f3010f] hover:text-red-700 transition-colors">
+                                        <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d='m15.241 3.721.293 2.029H19.5a.75.75 0 0 1 0 1.5h-.769l-.873 10.185c-.053.62-.096 1.13-.165 1.542-.07.429-.177.813-.386 1.169a3.25 3.25 0 0 1-1.401 1.287c-.372.177-.764.25-1.198.284-.417.033-.928.033-1.55.033h-2.316c-.622 0-1.133 0-1.55-.033-.434-.034-.826-.107-1.198-.284a3.25 3.25 0 0 1-1.401-1.287c-.21-.356-.315-.74-.386-1.169-.069-.413-.112-.922-.165-1.542L5.269 7.25H4.5a.75.75 0 0 1 0-1.5h3.966l.293-2.029.011-.061c.182-.79.86-1.41 1.71-1.41h3.04c.85 0 1.528.62 1.71 1.41zM9.981 5.75h4.037l-.256-1.776c-.048-.167-.17-.224-.243-.224h-3.038c-.073 0-.195.057-.243.224zm1.269 4.75a.75.75 0 0 0-1.5 0v5a.75.75 0 0 0 1.5 0zm3 0a.75.75 0 0 0-1.5 0v5a.75.75 0 0 0 1.5 0z'/>
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <p class="py-10 border-b ">Christmas with family!</p>
-                        
-                        <div class="flex flex-row p-4 space-x-4 relative top-6"> 
-                            <img class="w-[5%] rounded-full" src="{{ Storage::url('uploads/karlone1.jpeg') }}" alt="">
-                            <div class="flex flex-col">
-                                <span>User Name</span>
-                                <span>Date</span>
+                            
+                            {{-- Caption --}}
+                            <p class="py-6 border-b text-lg font-medium text-gray-800 ">
+                                {{ $activity->pub_caption }}
+                            </p>
+                            
+                            {{-- Footer Info --}}
+                            <div class="flex flex-row items-center space-x-4 mt-4"> 
+                                <img class="w-10 h-10 rounded-full object-cover" 
+                                    src="{{ ($activity->user && $activity->user->profile_picture) ? asset('storage/' . $activity->user->profile_picture) : asset('images/default-profile.jpg') }}" 
+                                    alt="">
+                                <div class="flex flex-col text-sm">
+                                    <span class="font-bold text-gray-900">{{ $activity->user->full_name ?? 'Me' }}</span>
+                                    <span class="text-xs text-gray-400">{{ $activity->created_at->format('M d, Y') }}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
+                @empty
+                    <p class="text-center py-10 text-gray-400 italic">You haven't posted any activities yet.</p>
+                @endforelse
                 
 
 
             </div>
         </section>
+
+        <section id="setting-section" class="flex flex-col items-start justify-start hidden">
+            <header class="mb-6">
+            <h4 class="text-[#B7A54F] text-2xl font-bold">Account Settings</h4>
+        </header>
+
+        <div class="w-full max-w-2xl bg-[#f8f8ff] rounded-[12px] shadow shadow-black/10 p-8">
+            <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                @csrf
+                @method('PUT')
+
+                {{-- Profile Picture --}}
+                <div class="flex items-center space-x-6">
+                    <img class="w-24 h-24 rounded-full object-cover border-2 border-[#C8A35C]" 
+                        src="{{ $profilePhoto }}" alt="Profile">
+                    <div class="flex flex-col space-y-2">
+                        <label class="block font-medium text-gray-700">Change Profile Photo</label>
+                        <input type="file" name="profile_picture" class="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#EDE6E0] file:text-[#243837] hover:file:bg-[#D4C7B8]">
+                    </div>
+                </div>
+
+                {{-- Full Name --}}
+                <div class="space-y-2">
+                    <label class="block font-medium text-gray-700">Full Name</label>
+                    <input type="text" name="full_name" value="{{ auth()->user()->full_name }}" 
+                        class="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#C8A35C] focus:outline-none">
+                </div>
+
+                {{-- Email --}}
+                <div class="space-y-2">
+                    <label class="block font-medium text-gray-700">Email Address</label>
+                    <input type="email" name="email" value="{{ auth()->user()->email }}" 
+                        class="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#C8A35C] focus:outline-none">
+                </div>
+
+                {{-- Update Button --}}
+                <button type="submit" class="w-full py-4 bg-[#C8A35C] text-white font-bold rounded-xl hover:bg-[#b58f4d] transition-colors shadow-sm">
+                    Update Profile
+                </button> 
+            </form>
+        </div>
+        </section>
         
     </main>
+
+    {{-- edit modal --}}
+    <div id="edit-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 hidden">
+        <div class="bg-white rounded-[12px] w-[90%] max-w-lg p-6 shadow-xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-[#243837]">Edit Activity</h3>
+                <button onclick="closeEditModal()" class="text-gray-500 hover:text-black">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d='M18 6 6 18M6 6l12 12'/></svg>
+                </button>
+            </div>
+
+            <form id="edit-activity-form">
+                <input type="hidden" id="edit-pub-id">
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                    <select id="edit-category" name="category" class="w-full p-2 border rounded-lg bg-[#f8f8ff]">
+                        <option value="Travel">Travel</option>
+                        <option value="Work">Work</option>
+                        <option value="Event">Event</option>
+                        <option value="Personal">Personal</option>
+                    </select>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Caption</label>
+                    <textarea id="edit-caption" name="caption" rows="4" class="w-full p-2 border rounded-lg bg-[#f8f8ff]"></textarea>
+                </div>
+
+                <div class="flex justify-end space-x-3">
+                    <button type="button" onclick="closeEditModal()" class="px-4 py-2 text-gray-600 hover:underline">Cancel</button>
+                    <button type="submit" class="px-6 py-2 bg-[#C8A35C] text-white rounded-lg hover:bg-[#b58f4d] transition-colors">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </div>
+
+
+
+
 
 <script>
     function toggleLike(pubId) {

@@ -149,20 +149,141 @@ if (fileInput && fileNameDisplay && fileSubtext) {
 }
 
 
+//Delete post
+
+interface DeleteResponse {
+    success: boolean;
+    message?: string;
+}
+
+const deleteActivity = (pubId: string): void => {
+    if (!confirm('Are you sure you want to delete this activity?')) return;
+
+    const csrfToken = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement | null)?.content;
+    if (!csrfToken) return;
+
+    fetch(`/publications/${pubId}`, {
+        method: 'DELETE',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then((data: { success: boolean }) => {
+        if (data.success) {
+            // 1. Target the card in "My Activities"
+            const activityCard = document.getElementById(`activity-card-${pubId}`);
+            
+            // 2. Target the card in the "Community Feed"
+            const feedCard = document.getElementById(`feed-card-${pubId}`);
+
+            // helper function to animate and remove
+            const animateRemoval = (el: HTMLElement | null) => {
+                if (el) {
+                    el.style.transition = 'all 0.5s ease';
+                    el.style.opacity = '0';
+                    el.style.transform = 'scale(0.9)';
+                    setTimeout(() => el.remove(), 500);
+                }
+            };
+
+            animateRemoval(activityCard);
+            animateRemoval(feedCard);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+};
+
+(window as any).deleteActivity = deleteActivity;
 
 
+// Edit modal
 
+const editForm = document.getElementById('edit-activity-form') as HTMLFormElement | null;
 
+    editForm?.addEventListener('submit', async (e: Event) => {
+        e.preventDefault();
 
+        const submitBtn = editForm.querySelector('button[type="submit"]') as HTMLButtonElement;
+        const pubId = (document.getElementById('edit-pub-id') as HTMLInputElement).value;
+        const category = (document.getElementById('edit-category') as HTMLSelectElement).value;
+        const caption = (document.getElementById('edit-caption') as HTMLTextAreaElement).value;
+        const csrfToken = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement | null)?.content;
 
+        // Visual feedback: Disable button
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Saving...';
 
+        try {
+            const response = await fetch(`/publications/${pubId}`, {
+                method: 'PUT',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken || '',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    pub_category: category,
+                    pub_caption: caption
+                })
+            });
 
+            const data = await response.json();
 
-
-
-
-
+            if (data.success) {
+                // Update UI in both locations
+                updateElementContent(`activity-card-${pubId}`, category, caption, true);
+                updateElementContent(`feed-card-${pubId}`, category, caption, false);
+                
+                closeEditModal();
+            } else {
+                alert('Update failed on the server.');
+            }
+        } catch (err) {
+            console.error('Edit error:', err);
+            alert('An error occurred. Check the console.');
+        } finally {
+            // Restore button
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Save Changes';
+        }
+    });
 
 
 
 })
+
+//Edit modal
+function updateElementContent(cardId: string, category: string, caption: string, isActivity: boolean): void {
+    const card = document.getElementById(cardId);
+    if (!card) return;
+
+    const catEl = card.querySelector('.card-cat');
+    // Activities use p.py-6, Community Feed uses .card-caption (based on our previous cards)
+    const capEl = isActivity ? card.querySelector('p.py-6') : card.querySelector('.card-caption');
+
+    if (catEl) catEl.textContent = category;
+    if (capEl) capEl.textContent = caption;
+}
+
+// Kept global for the onclick handlers
+(window as any).openEditModal = (pubId: string) => {
+    const modal = document.getElementById('edit-modal');
+    const card = document.getElementById(`activity-card-${pubId}`);
+    if (!modal || !card) return;
+
+    const category = card.querySelector('.card-cat')?.textContent?.trim() || '';
+    const caption = card.querySelector('p.py-6')?.textContent?.trim() || '';
+
+    (document.getElementById('edit-pub-id') as HTMLInputElement).value = pubId;
+    (document.getElementById('edit-category') as HTMLSelectElement).value = category;
+    (document.getElementById('edit-caption') as HTMLTextAreaElement).value = caption;
+    
+
+    modal.classList.remove('hidden');
+};
+
+(window as any).closeEditModal = () => {
+    document.getElementById('edit-modal')?.classList.add('hidden');
+};

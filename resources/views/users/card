@@ -97,3 +97,32 @@
                 countSpan.innerText = data.new_count;
             });
         }
+
+
+        my-activities card 
+
+        <div class="flex space-x-4 bg-[#f8f8ff] rounded-[12px] text-[#6b6b6b] shadow shadow-black transition-transform duration-[1000ms] hover:-translate-2">
+                    <img class="w-[20%]  rounded-l-[12px]" src="{{ Storage::url('uploads/karlone2.jpeg') }}" alt="">
+                    <div class="p-4">
+                        <div class="flex justify-between items-center">
+                            <span class="card-cat">categorie</span>
+                            <div class="flex space-x-2">
+                                <span><svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d='M14.678 3.272a3.483 3.483 0 0 1 4.928-.001l1.127 1.127a3.483 3.483 0 0 1 0 4.925L9.33 20.729a3.48 3.48 0 0 1-2.463 1.021H3a.75.75 0 0 1-.75-.75v-3.844a3.48 3.48 0 0 1 1.019-2.461zm3.867 1.06a1.983 1.983 0 0 0-2.806 0l-.896.897 3.931 3.931.898-.898a1.983 1.983 0 0 0 0-2.804z'/></svg>
+                                </span> 
+                                <span class="text-[#f3010f]"><svg  width="24" height="24" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d='m15.241 3.721.293 2.029H19.5a.75.75 0 0 1 0 1.5h-.769l-.873 10.185c-.053.62-.096 1.13-.165 1.542-.07.429-.177.813-.386 1.169a3.25 3.25 0 0 1-1.401 1.287c-.372.177-.764.25-1.198.284-.417.033-.928.033-1.55.033h-2.316c-.622 0-1.133 0-1.55-.033-.434-.034-.826-.107-1.198-.284a3.25 3.25 0 0 1-1.401-1.287c-.21-.356-.315-.74-.386-1.169-.069-.413-.112-.922-.165-1.542L5.269 7.25H4.5a.75.75 0 0 1 0-1.5h3.966l.293-2.029.011-.061c.182-.79.86-1.41 1.71-1.41h3.04c.85 0 1.528.62 1.71 1.41zM9.981 5.75h4.037l-.256-1.776c-.048-.167-.17-.224-.243-.224h-3.038c-.073 0-.195.057-.243.224zm1.269 4.75a.75.75 0 0 0-1.5 0v5a.75.75 0 0 0 1.5 0zm3 0a.75.75 0 0 0-1.5 0v5a.75.75 0 0 0 1.5 0z'/></svg> </span>
+                            </div>
+                        </div>
+                        
+                        <p class="py-10 border-b ">Christmas with family!</p>
+                        
+                        <div class="flex flex-row p-4 space-x-4 relative top-6"> 
+                            <img class="w-[5%] rounded-full" src="{{ Storage::url('uploads/karlone1.jpeg') }}" alt="">
+                            <div class="flex flex-col">
+                                <span>User Name</span>
+                                <span>Date</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
