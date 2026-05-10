@@ -4,6 +4,7 @@ namespace App\Providers;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +21,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
+
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
         return (new MailMessage)
             ->subject('Welcome to Alabaster - Verify Your Email')
