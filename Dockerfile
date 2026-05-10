@@ -42,6 +42,8 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 EXPOSE 80
 RUN php artisan config:clear
 # 8. Start script: Run migrations, link storage, and start Apache
-CMD php artisan migrate --force && \
+CMD chmod -R 775 storage bootstrap/cache && \
+    chown -R www-data:www-data storage bootstrap/cache && \
+    php artisan migrate --force && \
     php artisan storage:link && \
     apache2-foreground
