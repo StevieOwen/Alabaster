@@ -40,7 +40,7 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 
 # 7. Expose port (Render uses $PORT environment variable)
 EXPOSE 80
-
+RUN php artisan config:clear
 # 8. Start script: Run migrations, link storage, and start Apache
 CMD php artisan migrate --force && \
     php artisan storage:link && \
