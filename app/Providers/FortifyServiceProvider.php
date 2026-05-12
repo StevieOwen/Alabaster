@@ -49,7 +49,7 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         Fortify::verifyEmailView(function () {
-        return view('auth.validateEmail');
+        return view('Auth.validateEmail');
          });
         $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
             public function toResponse($request)
@@ -60,7 +60,7 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         Fortify::loginView(function () {
-        return view('auth.signin'); 
+        return view('Auth.signin'); 
         });
 
         $this->app->instance(LoginResponse::class, new class implements LoginResponse {
@@ -72,12 +72,12 @@ class FortifyServiceProvider extends ServiceProvider
 
         // The page where the user enter their email
         Fortify::requestPasswordResetLinkView(function () {
-            return view('auth.forgotPassword');
+            return view('Auth.forgotPassword');
         });
 
         // The page where the user enter the new password
         Fortify::resetPasswordView(function ($request) {
-            return view('auth.resetPassword', ['request' => $request]);
+            return view('Auth.resetPassword', ['request' => $request]);
         });
 
         $this->app->singleton(CreatesNewUsers::class, CreateNewUser::class);
