@@ -13,7 +13,7 @@
 
 @layer base{
     h5{
-        @apply text-[#3d3d3d] text-[min(1.4vw,100px)] font-bold;
+        @apply text-[#3d3d3d] text-[clamp(0.9rem,3vw,1.5rem)] font-bold;
     }
 
     
@@ -25,10 +25,10 @@
   }
   
   .card-text{
-     @apply text-center text-[#6b6b6b] text-[min(1.2vw,150px)] ;
+     @apply text-center text-[#6b6b6b] text-[clamp(0.7rem,3vw,1rem)] ;
   }
   .logo{
-    @apply text-[#B7A54F] text-[min(2.5vw,150px)] font-bold;
+    @apply text-[#B7A54F] text-[clamp(1.3rem,5vw,2.5rem)] ;
   }
   .button-join{
     @apply text-[min(1.8vw,100px)] bg-[#C8A35C] text-[#fff] cursor-pointer px-6  py-2 rounded-[12px] transition-colors duration-[1000ms] hover:bg-[#B7A54F] shadow shadow-black;
@@ -43,7 +43,7 @@
     @apply block border bg-[#EDE6E0] w-auto rounded-[8px] py-1 px-1 focus:outline-none focus:ring-2 focus:ring-[#C8A35C];
   }
   .input-submit{
-    @apply bg-[#C8A35C] cursor-pointer text-[#fff] px-46 rounded-[10px] py-2 transition-colors duration-[1000ms] hover:bg-[#B7A54F];
+    @apply bg-[#C8A35C]  cursor-pointer text-[#fff] px-20  rounded-[10px] py-2 transition-colors duration-[1000ms] hover:bg-[#B7A54F] md:px-46;
   }
   .link{
     @apply hover:underline;

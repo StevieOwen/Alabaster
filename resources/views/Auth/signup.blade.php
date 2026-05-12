@@ -1,8 +1,8 @@
 <x-authLayout>
 <div class="relative top-20 flex flex-col justify-center items-center p-6 ">
-    <div class="bg-[#fff] p-8 rounded-[12px] flex flex-col space-y-2 justify-center items-center shadow shadow-black">
-        <h4 class="text-[#B7A54F] text-[min(2vw,150px)] font-bold">Create Account</h4>
-        <p class="text-[#6b6b6b]">Join our community of moment-sharers</p>
+    <div class="bg-[#fff]  w-full p-8 rounded-[12px] flex flex-col space-y-2 justify-center items-center shadow shadow-black lg:w-[60%]">
+        <h4 class="text-[#B7A54F] text-[clamp(1.3rem,3vw,1.8rem)] font-bold">Create Account</h4>
+        <p class="text-[#6b6b6b] whitespace-nowrap">Join our community of moment-sharers</p>
 
         @if ($errors->any())
             <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 10px;">
@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <form id="registration" class="mt-2 flex flex-col space-y-4 " action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
+        <form id="registration" class=" w-full mt-2  flex flex-col space-y-4 " action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
            @csrf
             <div class='flex flex-col space-y-1'>
                 <label for="full-name"> Full Name</label>
@@ -57,11 +57,11 @@
             </div>
             
 
-            <div class="flex justify-center">
-                <input class="input-submit" type="submit" value="Create Account" id="btn-create-account">
+            <div class="flex justify-center ">
+                <input class="input-submit " type="submit" value="Create Account" id="btn-create-account">
             </div>
             <div>
-                <p class="text-center text-[#6b6b6b]">Already have an account? <span class="text-[#C8A35C] "><a href="/signin" class="link">Sign In</a> </span></p>
+                <p class="text-center text-[#6b6b6b] whitespace-nowrap">Already have an account? <span class="text-[#C8A35C] "><a href="/signin" class="link">Sign In</a> </span></p>
             </div>
         </form>
     </div>

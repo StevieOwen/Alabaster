@@ -1,8 +1,8 @@
 <x-authLayout>
 <div class="relative top-20 flex flex-col justify-center items-center p-6 ">
-    <div class="bg-[#fff] p-8 rounded-[12px] flex flex-col space-y-2 justify-center items-center shadow shadow-black">
-        <h4 class="text-[#B7A54F] text-[min(2vw,150px)] font-bold">Welcome Back</h4>
-        <p class="text-[#6b6b6b]">Login to continue sharing your moments</p>
+    <div class="bg-[#fff] w-full p-8 rounded-[12px] flex flex-col space-y-2 justify-center items-center shadow shadow-black lg:w-[50%]">
+        <h4 class="text-[#B7A54F] text-[clamp(1.3rem,3vw,1.8rem)] font-bold">Welcome Back</h4>
+        <p class="text-[#6b6b6b] whitespace-nowrap">Login to continue sharing your moments</p>
         @if ($errors->any())
             <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 10px;">
                 <ul id="errors">
