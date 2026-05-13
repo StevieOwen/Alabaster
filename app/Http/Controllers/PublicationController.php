@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 class PublicationController extends Controller
 {
     function createPublication(Request $request){
+        
         $validated=$request->validate(
             [
                 'img'=>[ 'image', 'mimes:jpg,jpeg,png', 'max:8048'],
@@ -21,41 +22,37 @@ class PublicationController extends Controller
                 'pub_category'=>['required', 'string', 'max:255'],
             ]
         );
+        //configuration of the cloudinary instance
+        Configuration::instance([
+        'cloud' => [
+            'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+            'api_key'    => env('CLOUDINARY_API_KEY'),
+            'api_secret' => env('CLOUDINARY_API_SECRET'),
+            ],
+            'url' => ['secure' => true]
+        ]);
 
-         //generating publiaction id       
+        //generating publiaction id       
         $pub_id="pub_". random_int('100000',999999);
         $imagePath=null;
 
         //storing image
-        if ($request->hasFile('img')) {
+        if ($request->file('img')) {
             // Stores in storage/app/public/publications
             // $imagePath = $request->file('img')->store('publications', 'public');
+            $file = $request->file('img');
 
-            // 1. Configure Cloudinary
-                Configuration::instance([
-                    'cloud' => [
-                        'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-                        'api_key'    => env('CLOUDINARY_API_KEY'),
-                        'api_secret' => env('CLOUDINARY_API_SECRET'),
-                    ],
-                    'url' => ['secure' => true]
-                ]);
+            //  Upload to Cloudinary using the file's temporary path
+            $upload = (new UploadApi())->upload($file->getRealPath(), [
+                'folder' => 'alabaster/publication',
+                'quality' => 'auto', // Automatically optimizes image size
+                'fetch_format' => 'auto', // Serves WebP if the browser supports it
+            ]);
 
-                // 2. Upload to Cloudinary using the file's temporary path
-                // We use $input['profile_picture'] directly as it's an UploadedFile object
-                $upload = (new UploadApi())->upload(request()->file('profile_picture')->getRealPath(), [
-                    'folder' => 'alabaster/publication',
-                    'transformation' => [
-                        'width' => 500, 
-                        'height' => 500, 
-                        'crop' => 'thumb', 
-                        'gravity' => 'face' // Centers the crop on the user's face
-                    ]
-                ]);
-
-                $imagePath=$upload['secure_url'];
+            $imagePath=$upload['secure_url'];
 
         }
+
 
         //create publication
         Publication::create([

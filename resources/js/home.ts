@@ -148,7 +148,7 @@ if (fileInput && fileNameDisplay && fileSubtext) {
             fileSubtext.innerText = name;
             fileSubtext.classList.add('text-[#C8A35C]', 'font-semibold'); // Add a highlight color
             publication_section?.classList.remove('w-[90%]');
-            publication_section?.classList.add('w-[70%]');
+            publication_section?.classList.add('max-md:w-[70%]');
 
             file_cont?.classList.toggle('border');
         }

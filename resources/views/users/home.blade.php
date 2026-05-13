@@ -217,7 +217,7 @@
                             </div>
 
                             {{-- Post Button  --}}
-                            <button  class="w-full py-4 bg-[#C8A35C] text-white font-bold rounded-xl hover:bg-[#D4C7B8] transition-colors shadow-sm" id="publish-btn">
+                            <button  class="w-full py-4 bg-[#D4C7B8]  text-white font-bold rounded-xl hover:bg-[#C8A35C] transition-colors shadow-sm" id="publish-btn">
                             Post
                             </button> 
                             

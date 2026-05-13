@@ -28,7 +28,7 @@
     </div> --}}
 </main>
 
-<section>
+<section class="bg-[#fff]">
     <div class="py-25" >
         <h4 class="text-center text-[clamp(1.5rem,3vw,2.5rem)] text-[#3d3d3d]  font-bold">How It Works</h4>
         <div class="mt-6 flex space-x-6 justify-center max-sm:flex-col  max-sm:space-y-6  max-sm:space-x-0 max-sm:items-center max-sm:justify-center ">

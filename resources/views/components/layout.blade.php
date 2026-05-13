@@ -7,7 +7,7 @@
     
     @vite('resources/css/app.css')
 </head>
-<body>
+<body class="bg-[#EDE6E0]">
     {{$slot}}
 </body>
 </html>
