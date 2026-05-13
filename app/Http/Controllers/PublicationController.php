@@ -6,6 +6,8 @@ use App\Models\Image;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Cloudinary\Configuration\Configuration;
+use Cloudinary\Api\Upload\UploadApi;
 
 use Illuminate\Http\Request;
 
@@ -22,11 +24,37 @@ class PublicationController extends Controller
 
          //generating publiaction id       
         $pub_id="pub_". random_int('100000',999999);
+        $imagePath=null;
 
         //storing image
         if ($request->hasFile('img')) {
             // Stores in storage/app/public/publications
-            $imagePath = $request->file('img')->store('publications', 'public');
+            // $imagePath = $request->file('img')->store('publications', 'public');
+
+            // 1. Configure Cloudinary
+                Configuration::instance([
+                    'cloud' => [
+                        'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                        'api_key'    => env('CLOUDINARY_API_KEY'),
+                        'api_secret' => env('CLOUDINARY_API_SECRET'),
+                    ],
+                    'url' => ['secure' => true]
+                ]);
+
+                // 2. Upload to Cloudinary using the file's temporary path
+                // We use $input['profile_picture'] directly as it's an UploadedFile object
+                $upload = (new UploadApi())->upload(request()->file('profile_picture')->getRealPath(), [
+                    'folder' => 'alabaster/publication',
+                    'transformation' => [
+                        'width' => 500, 
+                        'height' => 500, 
+                        'crop' => 'thumb', 
+                        'gravity' => 'face' // Centers the crop on the user's face
+                    ]
+                ]);
+
+                $imagePath=$upload['secure_url'];
+
         }
 
         //create publication
