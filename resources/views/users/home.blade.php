@@ -76,7 +76,7 @@
                 @foreach($publications as $pub)
                     <div id="feed-card-{{ $pub->pub_id }}" class="community-card">
                         {{-- Post Image --}}
-                        <img class="card-img" src="{{ $pub->image ? asset('storage/' . $pub->image->img) : asset('images/default-post.jpg') }}">
+                        <img class="card-img" src="{{ $pub->image->img }}">
                         
                         <div class="p-2 w-full flex flex-col space-y-2 ">
                             {{-- Dynamic Category --}}
@@ -107,9 +107,7 @@
                             <div class='flex space-x-2 items-center'>
                                 {{-- Accessing the user relationship for the profile picture --}}
                                 <img class="w-[30px] h-[30px] rounded-full object-cover" 
-                                    src="{{ ($pub->user && $pub->user->profile_picture) 
-                                            ? asset('storage/' . $pub->user->profile_picture) 
-                                            : asset('profiles/default-profile.jpg') }}"
+                                    src="{{ $pub->user->profile_picture }}"
                                     alt="">
                                 <span class="font-bold text-sm">{{ $pub->user->full_name }}</span>
                             </div>
@@ -240,7 +238,7 @@
                     <div id="activity-card-{{ $activity->pub_id }}" class=" w-full ml-5 p-2 flex flex-col space-y-4 bg-[#f8f8ff] rounded-[12px] text-[#6b6b6b] shadow shadow-black/10 transition-transform duration-500 hover:-translate-y-1 md:flex md:flex-row md:space-x-4 md:space-y-0">
                         {{-- Post Image --}}
                         <img class="w-full object-cover rounded-t-[12px] md:rounded-l-[12px] md:w-[20%]" 
-                            src="{{ $activity->image ? asset('storage/' . $activity->image->img) : asset('images/default-post.jpg') }}" 
+                            src="{{ $activity->image->img }}" 
                             alt="Activity Image">
                         
                         <div class="p-4 flex-1">
@@ -276,7 +274,7 @@
                             {{-- Footer Info --}}
                             <div class="flex flex-row items-center space-x-4 mt-4"> 
                                 <img class="w-10 h-10 rounded-full object-cover" 
-                                    src="{{ ($activity->user && $activity->user->profile_picture) ? asset('storage/' . $activity->user->profile_picture) : asset('images/default-profile.jpg') }}" 
+                                    src="{{ $activity->user->profile_picture }}" 
                                     alt="">
                                 <div class="flex flex-col text-sm">
                                     <span class="font-bold text-gray-900">{{ $activity->user->full_name ?? 'Me' }}</span>

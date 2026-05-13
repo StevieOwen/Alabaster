@@ -37,7 +37,7 @@ class PublicationController extends Controller
         $imagePath=null;
 
         //storing image
-        if ($request->file('img')) {
+        if ($request->hasFile('img')) {
             // Stores in storage/app/public/publications
             // $imagePath = $request->file('img')->store('publications', 'public');
             $file = $request->file('img');
