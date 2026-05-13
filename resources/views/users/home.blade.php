@@ -1,6 +1,6 @@
 <x-layout>
 <title>Home | Alabaster & Ochre</title>
-<div class="bg-[#EDE6E0] flex space-x-15 min-h-screen ">
+<div class="bg-[#EDE6E0] flex space-x-15 min-h-screen body">
     <div id="backdrop" class="fixed ml-64 inset-0 bg-black/50 z-40 w-full hidden md:hidden"></div>
     <aside id="sidemenu" class="hidden z-50 md:fixed md:flex left-0 flex-col p-8  border-r-[1px] border-[#6b6b6b] w-64 h-screen top-0">
 
@@ -53,7 +53,7 @@
         </div>
     </aside>
 
-    <main id="main" class=" border-l border-[#6b6b6b]  p-2 flex flex-col space-y-6  md:ml-64">
+    <main id="main" class=" md:border-l md:border-[#6b6b6b]  p-2 flex flex-col space-y-6  md:ml-64">
         <div class=" relative z-10 md:hidden">
             <svg id="burger-menu-icon" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
             <path d='M4.5 6.5h15M4.5 12h15m-15 5.5h15'/></svg>
@@ -67,8 +67,9 @@
 
         <section id="community-feed" >
             <header class="mb-6">
-                <h4 class="text-[#B7A54F] text-2xl font-bold max-md:text-center"> Community Feed</h4>
+                <h4 class="text-[#B7A54F] text-2xl font-bold"> Community Feed</h4>
             </header>
+            
             <div class= "community-card-cont">
             
                 {{-- cards --}}
@@ -164,8 +165,8 @@
         </section>
 
         {{-- Create publication --}}
-
-        <section id="quick-share" class="ml-20 bg-[#f8f8ff] rounded-[12px] shadow shadow-[#212124] p-4 hidden">
+        
+        <section id="quick-share"  class=" max-md:ml-1 w-[90%] lg:ml-20 bg-[#f8f8ff] rounded-[12px] shadow shadow-[#212124] p-4 hidden">
                 <header class="mb-6 flex flex-col space-y-3">
                     <h4 class="text-[#B7A54F] text-2xl font-bold max-md:text-center"> Quick Share</h4>
                    
@@ -174,7 +175,7 @@
                 <form id="publication-form" action="/createPublication" method="POST" enctype="multipart/form-data">
                  @csrf
                    <div class='flex flex-col md:flex-row gap-8 p-8 rounded-2xl shadow-sm max-w-4xl mx-auto'>
-                        <div class="flex-1 border-2 border-dashed border-gray-300 rounded-2xl flex flex-col items-center justify-center p-12 bg-gray-50/50 hover:bg-gray-50 transition-colors cursor-pointer group">
+                        <div id="img-cont" class="flex-1 border-2 border-dashed border-gray-300 rounded-2xl flex flex-col items-center justify-center p-12 bg-gray-50/50 hover:bg-gray-50 transition-colors cursor-pointer group">
                             <label class="flex-1 border-2 border-dashed border-gray-300 rounded-2xl flex flex-col items-center justify-center p-12 bg-gray-50/50 hover:bg-gray-50 transition-colors cursor-pointer group relative">
                             <input 
                                 id="file-upload"
@@ -227,8 +228,8 @@
                 
                
         </section>
-
-        <section id="my-activities" class="flex flex-col items-start justify-start hidden">
+        
+        <section id="my-activities" class="w-full flex flex-col items-start justify-start hidden">
             <header class="mb-6">
                 <h4 class="text-[#B7A54F] text-2xl font-bold max-md:text-center"> My Activities</h4>
             </header>
@@ -236,9 +237,9 @@
             <div class="flex flex-col space-y-4 ">
 
                 @forelse($myActivities as $activity)
-                    <div id="activity-card-{{ $activity->pub_id }}" class="flex space-x-4 bg-[#f8f8ff] rounded-[12px] text-[#6b6b6b] shadow shadow-black/10 transition-transform duration-500 hover:-translate-y-1">
+                    <div id="activity-card-{{ $activity->pub_id }}" class=" w-full ml-5 p-2 flex flex-col space-y-4 bg-[#f8f8ff] rounded-[12px] text-[#6b6b6b] shadow shadow-black/10 transition-transform duration-500 hover:-translate-y-1 md:flex md:flex-row md:space-x-4 md:space-y-0">
                         {{-- Post Image --}}
-                        <img class="w-[20%] object-cover rounded-l-[12px]" 
+                        <img class="w-full object-cover rounded-t-[12px] md:rounded-l-[12px] md:w-[20%]" 
                             src="{{ $activity->image ? asset('storage/' . $activity->image->img) : asset('images/default-post.jpg') }}" 
                             alt="Activity Image">
                         

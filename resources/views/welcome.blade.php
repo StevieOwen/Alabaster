@@ -12,7 +12,7 @@
 <main  class="bg-[#EDE6E0] px-2 " >
     <div class="flex flex-col items-center space-y-5 py-42">
         <h1  class="text-[#B7A54F] text-[clamp(1.8rem,3vw,3.5rem)] whitespace-nowrap font-bold">Document Your Moments</h1>
-        <p class="text-[#6b6b6b] text-[clamp(0.8rem,3vw,1.5rem)] max-sm:text-center">A community for sharing quick snapshots of your travels, <br> events, and daily discoveries.</p>
+        <p class="text-[#6b6b6b] text-[clamp(0.8rem,3vw,1.5rem)] text-center">A community for sharing quick snapshots of your travels, <br> events, and daily discoveries.</p>
         <button class="button-join text-[clamp(1.5rem,3vw,3rem)]"> <a href="/signup">Join the Community</a></button>
     </div>
 

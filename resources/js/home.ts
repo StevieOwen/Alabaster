@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    
+// open and close comments section ----start  
+
 let close_comment=document.getElementById("close-comment");
 let comment_section=document.getElementById("comment-section");
 let comment_icon=document.getElementById('comment-icon');
-
-// open and close comments section ----start
 
 close_comment?.addEventListener('click',(e)=>{
     e.preventDefault();
@@ -56,12 +55,13 @@ const navLinks = document.querySelectorAll<HTMLAnchorElement>('[data-target]');
 
 // switching section based on the Sidemenu --end
 
-//show-hide sidemenu on small scree --start
+//show-hide sidemenu on small screen --start
 let burger_menu_icon=document.getElementById('burger-menu-icon');
 let sidemenu=document.getElementById('sidemenu');
 let main=document.getElementById('main');
 let menuLinks=document.querySelectorAll('.menuLinks')
 const backdrop = document.querySelector('#backdrop');
+const body=document.querySelector('.body');
 
 const toggleMenu = (isOpen: boolean) => {
     if (isOpen) {
@@ -69,11 +69,12 @@ const toggleMenu = (isOpen: boolean) => {
         sidemenu?.classList.add('flex');
         backdrop?.classList.remove('hidden');
         // Disable scrolling on main page while menu is open
-        document.body.style.overflow = 'hidden';
+        body?.classList.add('overflow-hidden');
     } else {
         sidemenu?.classList.add('hidden');
         sidemenu?.classList.remove('flex');
         backdrop?.classList.add('hidden');
+        burger_menu_icon?.classList.remove('hidden');
         // Re-enable scrolling
         document.body.style.overflow = 'auto';
     }
@@ -94,13 +95,13 @@ menuLinks.forEach(link => {
     link.addEventListener('click', () => {
         // Your section switching logic here...
         toggleMenu(false); 
-        burger_menu_icon?.classList.remove('hidden');
+       
     });
 });
 
-//show-hide sidemenu on small scree --end
+//show-hide sidemenu on small screen --end
 
-
+// creating  post
 const publication_form=document.getElementById('publication-form') as HTMLButtonElement | null;
 const publish_btn=document.getElementById('publish-btn') as HTMLFormElement | null;
 
@@ -118,7 +119,7 @@ publication_form?.addEventListener('submit',(e)=>{
 
 })
 
-// whipe successfull publication created
+// whipe successfull publication alert message 
 let pub_status=document.getElementById('pub_status') ;
 
 if (pub_status) {
@@ -133,6 +134,8 @@ if (pub_status) {
 const fileInput = document.getElementById('file-upload') as HTMLInputElement | null;
 const fileNameDisplay = document.getElementById('file-name');
 const fileSubtext = document.getElementById('file-subtext');
+const publication_section=document.getElementById('quick-share');
+const file_cont=document.getElementById('img-cont');
 
 if (fileInput && fileNameDisplay && fileSubtext) {
     fileInput.addEventListener('change', () => {
@@ -144,6 +147,10 @@ if (fileInput && fileNameDisplay && fileSubtext) {
             fileNameDisplay.innerText = "File Selected:";
             fileSubtext.innerText = name;
             fileSubtext.classList.add('text-[#C8A35C]', 'font-semibold'); // Add a highlight color
+            publication_section?.classList.remove('w-[90%]');
+            publication_section?.classList.add('w-[70%]');
+
+            file_cont?.classList.toggle('border');
         }
     });
 }
