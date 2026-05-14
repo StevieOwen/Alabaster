@@ -34,7 +34,7 @@
         <div class="mt-auto flex flex-col space-y-4 text-[#6b6b6b]"> 
             <div class="">
                 <a data-target="setting-section" class="menuLinks flex space-x-2 items-center" href="">
-                    <img class="w-[15%] rounded-full " src="{{$profilePhoto}}" alt="">
+                    <img class="w-[15%] rounded-full " src="{{ auth()->user()->profile_picture }}" alt="">
                     <span>{{ auth()->user()->full_name }}</span>
                 </a>
             </div>
@@ -207,10 +207,15 @@
                             <div class="space-y-2">
                             <label class="block font-medium text-gray-700">Category</label>
                             <select  name="pub_category" class="w-full p-3 border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-[#C8A35C] focus:outline-none appearance-none cursor-pointer">
-                                <option>Travel</option>
-                                <option>Work</option>
-                                <option>Hobby</option>
-                                <option>Event</option>
+                                <option value="Travel">Travel</option>
+                                <option value="Work">Work</option>
+                                <option value="Hobby">Hobby</option>
+                                <option value="Event">Event</option>
+                                <option value="Fitness">Fitness</option>
+                                <option value="Self-Care">Self-Care</option>
+                                <option value="Nature">Nature</option>
+                                <option value="Art">Art</option>
+
                             </select>
                             </div>
 
