@@ -439,23 +439,23 @@
         if (!text) return;
 
         fetch(`/publications/${pubId}/comments`, {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        // We must use 'comment_text' here to match your DB column
-        body: JSON.stringify({ comment_text: text }) 
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ comment_text: text }) 
         })
         .then(response => {
             if (!response.ok) return response.json().then(err => { throw err; });
             return response.json();
         })
         .then(data => {
+            // 1. Build and prepend the new comment component smoothly
             const newCommentHtml = `
                 <div class="flex space-x-2 animate-fade-in">
-                    <img class="w-8 h-8 rounded-full object-cover" src="${data.user_avatar}" alt="">
+                    <img class="w-8 h-8 rounded-full object-cover" src="${data.user_avatar || '/images/default-avatar.png'}" alt="">
                     <div class="text-[#6b6b6b] text-[0.8rem] flex flex-col bg-white p-2 rounded-lg shadow-sm">
                         <span class="text-[#243837] font-semibold">${data.user_name}</span>
                         <p>${data.comment_text}</p>
@@ -463,17 +463,21 @@
                 </div>
             `;
             container.insertAdjacentHTML('afterbegin', newCommentHtml);
+            
+            // 2. Clear out the input field
             input.value = '';
             
-            // Update the visible count
+            // 3. Update the visible count using the actual database state returned by Laravel
             const countSpan = document.getElementById(`comments-number-${pubId}`);
-            if(countSpan) countSpan.innerText = parseInt(countSpan.innerText) + 1;
+            if (countSpan && data.new_comment_count !== undefined) {
+                countSpan.innerText = data.new_comment_count;
+            }
         })
         .catch(error => {
             console.error('Comment Error:', error);
             alert('Could not save comment. Check the console for details.');
         });
-        }
+    }
     </script>
 
 @vite('resources/js/home.ts')

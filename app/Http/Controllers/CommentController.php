@@ -16,6 +16,7 @@ class CommentController extends Controller
             'comment_text' => 'required|string|max:1000',
         ]);
 
+        $publication = Publication::where('pub_id', $pub_id)->firstOrFail();
         $comment_id="com_". random_int(100000,999999);
 
         $comment = Comment::create([
@@ -25,6 +26,7 @@ class CommentController extends Controller
             'comment_text' => $request->comment_text,
         ]);
 
+        $publication->increment('pub_comment_num');
         // Load the user relationship to return the name and avatar for the JS
         $comment->load('user');
 
@@ -34,7 +36,8 @@ class CommentController extends Controller
             'user_avatar' => $comment->user->profile_picture 
                              ? asset('storage/' . $comment->user->profile_picture) 
                              : asset('storage/profiles/default-profile.jpg'),
-            'comment_text' => $comment->comment_text
+            'comment_text' => $comment->comment_text,
+            'new_comment_count' => $publication->pub_comment_num,
         ]);
     }
 }

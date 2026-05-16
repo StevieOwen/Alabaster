@@ -126,3 +126,50 @@
                         </div>
                     </div>
                 </div>
+
+
+<comments-js>
+    function submitComment(pubId) {
+        const input = document.getElementById(`comment-input-${pubId}`);
+        const text = input.value.trim();
+        const container = document.getElementById(`comments-container-${pubId}`);
+
+        if (!text) return;
+
+        fetch(`/publications/${pubId}/comments`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        // We must use 'comment_text' here to match the DB column
+        body: JSON.stringify({ comment_text: text }) 
+        })
+        .then(response => {
+            if (!response.ok) return response.json().then(err => { throw err; });
+            return response.json();
+        })
+        .then(data => {
+            const newCommentHtml = `
+                <div class="flex space-x-2 animate-fade-in">
+                    <img class="w-8 h-8 rounded-full object-cover" src="${data.user_avatar}" alt="">
+                    <div class="text-[#6b6b6b] text-[0.8rem] flex flex-col bg-white p-2 rounded-lg shadow-sm">
+                        <span class="text-[#243837] font-semibold">${data.user_name}</span>
+                        <p>${data.comment_text}</p>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('afterbegin', newCommentHtml);
+            input.value = '';
+            
+            // Update the visible count
+            const countSpan = document.getElementById(`comments-number-${pubId}`);
+            if(countSpan) countSpan.innerText = parseInt(countSpan.innerText) + 1;
+        })
+        .catch(error => {
+            console.error('Comment Error:', error);
+            alert('Could not save comment. Check the console for details.');
+        });
+        }
+</comments-js>
