@@ -131,7 +131,7 @@
                                     <div class="flex space-x-2">
                                         {{-- commentator profile picture --}}
                                         <img class="w-8 h-8 rounded-full object-cover" 
-                                            src="{{ ($comment->user && $comment->user->profile_picture) ? asset('storage/' . $comment->user->profile_picture) : asset('images/default-profile.jpg') }}" alt="">
+                                            src="{{ $comment->user->profile_picture}}" alt="">
                                         
                                         <div class="w-full text-[#6b6b6b] text-[0.8rem] flex flex-col bg-white p-2 rounded-lg shadow-sm">
                                             {{-- commentator name --}}
